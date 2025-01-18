@@ -94,8 +94,16 @@ const downloadAndCommitBadge = async (githubToken, filePath, userID) => {
     }
 
     await executeCommand("git", ["add", filePath]);
-    await executeCommand("git", ["commit", "-m", commitMessage]);
-    await executeCommand("git", ["push"]);
+    // Check for changes before committing
+    try {
+      await executeCommand("git", ["diff", "--cached", "--exit-code"]);
+      console.log("No changes detected; skipping commit.");
+    } catch {
+      // Changes detected; proceed with commit
+      await executeCommand("git", ["commit", "-m", commitMessage]);
+      await executeCommand("git", ["push"]);
+    }
+    
   } catch (error) {
     console.error("Error during image download or git operations:", error);
     core.setFailed(`Action failed with error ${error.message}`);
