@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
 const FILE_PATH = core.getInput("image_path") || "./assets/tryhackme-badge.png";
-// const THM_USERNAME = core.getInput("username") || "dhanushnehru";
+const THM_USERNAME = core.getInput("username") || "dhanushnehru";
 const THM_USER_ID = core.getInput("user_id") || "1995656";
 
 /*
@@ -62,10 +62,10 @@ const refreshBadge = async (userId) => {
   }
 };
 
-const downloadAndCommitBadge = async (githubToken, filePath, userID) => {
+const downloadAndCommitBadge = async (githubToken, filePath, username) => {
   await refreshBadge(THM_USER_ID);
   try {
-    const url = `https://tryhackme.com/api/v2/badges/public-profile?userPublicId=${userID}`
+    const url = `https://tryhackme-badges.s3.amazonaws.com/${username}.png`;
     const path = filePath;
     const committerUsername = core.getInput("committer_username");
     const commitMessage = core.getInput("commit_message") || "Updated THM profile badge using action workflow by Dhanush Nehru";
@@ -110,4 +110,4 @@ const downloadAndCommitBadge = async (githubToken, filePath, userID) => {
   }
 };
 
-downloadAndCommitBadge(GITHUB_TOKEN, FILE_PATH, THM_USER_ID);
+downloadAndCommitBadge(GITHUB_TOKEN, FILE_PATH, THM_USERNAME);
