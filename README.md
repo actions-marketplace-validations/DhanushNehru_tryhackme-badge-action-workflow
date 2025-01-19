@@ -39,7 +39,7 @@ jobs:
         git config --global user.email "actions@github.com"
 
     - name: Fetch TryHackMe Badge
-      uses: DhanushNehru/tryhackme-badge-action-workflow@v1.1
+      uses: DhanushNehru/tryhackme-badge-action-workflow@v1.0
       with:
         image_path: './assets/tryhackme-badge.png'
         username: 'your_tryhackme_username'
